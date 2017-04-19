@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
 
-alias ansi='.bin/ansi'
-
 print_comment() {
-  ansi --white "$@"
+  .bin/ansi --white "$@"
 }
 print_prompt() {
   echo
-  ansi --cyan-intense 'tmiller@work '
-  ansi --newline --blue-intense '~/Desktop/TEDxBroco'
-  ansi --blue-intense '$ '
+  .bin/ansi --cyan-intense 'tmiller@work '
+  .bin/ansi --newline --blue-intense '~/Desktop/TEDxBroco'
+  .bin/ansi --blue-intense '$ '
 }
 print_prompt_wait() {
   print_prompt
   read
   echo -en "\033[1A\033[2K"
-  ansi --blue-intense '$ '
+  .bin/ansi --blue-intense '$ '
 }
 print_command() {
-  ansi --yellow "$* "
+  .bin/ansi --yellow "$* "
 }
 print_command_wait() {
   print_command "$@"
@@ -41,10 +39,10 @@ clear
 echo
 echo
 echo
-ansi --inverse --newline ' UNIX Shell I/O, Redirection, and Pipelines '
+.bin/ansi --inverse --newline ' UNIX Shell I/O, Redirection, and Pipelines '
 echo
-ansi '          ';ansi --inverse --black-intense --faint --newline ' TEDxBroco - 2017/04/19 '
-ansi '          ';ansi --inverse --black-intense --faint --newline '   tmiller@broco.com    '
+.bin/ansi '          ';.bin/ansi --inverse --black-intense --faint --newline ' TEDxBroco - 2017/04/19 '
+.bin/ansi '          ';.bin/ansi --inverse --black-intense --faint --newline '   tmiller@broco.com    '
 echo
 echo
 read
@@ -224,11 +222,11 @@ cat loripsum.txt | grep '<li>'
 
 read
 echo
-ansi 'Uh oh… UUOC.' ; ansi --red --faint --newline " Useless use of cat."
+.bin/ansi 'Uh oh… UUOC.' ; .bin/ansi --red --faint --newline " Useless use of cat."
 echo ; echo
 
 read
-ansi --red --inverse --bold ' CAT ABUSE '
+.bin/ansi --red --inverse --bold ' CAT ABUSE '
 echo ' '🙀
 echo ; echo
 
@@ -253,7 +251,7 @@ new_page
 echo
 echo
 echo
-ansi --inverse --newline ' THANK YOU '
+.bin/ansi --inverse --newline ' THANK YOU '
 echo
 echo
 echo
