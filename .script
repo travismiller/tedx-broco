@@ -1,0 +1,263 @@
+#!/usr/bin/env bash
+
+alias ansi='.bin/ansi'
+
+print_comment() {
+  ansi --white "$@"
+}
+print_prompt() {
+  echo
+  ansi --cyan-intense 'tmiller@work '
+  ansi --newline --blue-intense '~/Desktop/TEDxBroco'
+  ansi --blue-intense '$ '
+}
+print_prompt_wait() {
+  print_prompt
+  read
+  echo -en "\033[1A\033[2K"
+  ansi --blue-intense '$ '
+}
+print_command() {
+  ansi --yellow "$* "
+}
+print_command_wait() {
+  print_command "$@"
+  read
+}
+
+do_command() {
+  $@
+}
+
+new_page() {
+  read
+  clear
+}
+
+rm *.*
+clear
+
+
+echo
+echo
+echo
+ansi --inverse --newline ' UNIX Shell I/O, Redirection, and Pipelines '
+echo
+ansi '          ';ansi --inverse --black-intense --faint --newline ' TEDxBroco - 2017/04/19 '
+ansi '          ';ansi --inverse --black-intense --faint --newline '   tmiller@broco.com    '
+echo
+echo
+read
+clear
+
+################################################################################
+
+print_comment --bold "
+Simple example of using \`curl\`.
+"
+print_comment --newline "
+  -v, --verbose  Make the operation more talkative
+"
+print_prompt_wait
+print_command_wait "curl -v 'http://www.broco.com/robots.txt'"
+curl -s -v 'http://www.broco.com/robots.txt'
+
+new_page
+################################################################################
+
+print_comment --bold "
+Standard I/O streams.
+"
+print_comment --newline "
+- stdin  (0)
+- stdout (1)
+- stderr (2)
+"
+print_prompt_wait
+print_command_wait "curl -v 'http://www.broco.com/robots.txt' 1>robots.txt 2>robots.log"
+curl -s -v 'http://www.broco.com/robots.txt' 1>robots.txt 2>robots.log
+
+print_prompt
+print_command "ls -l"
+echo ; ls -l
+
+print_prompt
+print_command "cat robots.txt"
+echo ; cat robots.txt
+
+new_page
+################################################################################
+
+print_comment --bold "
+I/O Redirection.
+"
+print_comment --newline "
+- [0]<  FILENAME   Use a file as stdin
+- [1]>  FILENAME   Send stdout to a file (create or truncate)
+- [1]>> FILENAME   Send stdout to a file (create or append)
+"
+print_prompt_wait
+print_command_wait "grep '^>' < robots.log"
+grep '^>' < robots.log
+
+new_page
+################################################################################
+
+print_comment --bold "
+I/O Redirection.
+"
+print_comment --newline "
+- [0]<  FILENAME   Use a file as stdin
+- [1]>  FILENAME   Send stdout to a file (create or truncate)
+- [1]>> FILENAME   Send stdout to a file (create or append)
+"
+print_prompt
+print_command_wait "echo 'Hello world!' > hello-world.txt"
+echo 'Hello world!' > hello-world.txt
+
+print_prompt
+print_command "ls -l"
+echo ; ls -l
+
+print_prompt
+print_command "cat hello-world.txt"
+echo ; cat hello-world.txt
+
+new_page
+################################################################################
+
+print_comment --bold "
+I/O Redirection.
+"
+print_comment --newline "
+- [0]<  FILENAME   Use a file as stdin
+- [1]>  FILENAME   Send stdout to a file (create or truncate)
+- [1]>> FILENAME   Send stdout to a file (create or append)
+"
+print_prompt
+print_command_wait "grep '^>'  <robots.log  >>hello-world.txt"
+grep '^>'  <robots.log  >>hello-world.txt
+
+print_prompt
+print_command "ls -l"
+echo ; ls -l
+
+print_prompt
+print_command "cat hello-world.txt"
+echo ; cat hello-world.txt
+
+new_page
+################################################################################
+
+print_comment --bold "
+Another simple example of \`curl\`.
+"
+print_prompt_wait
+print_command_wait "curl 'http://loripsum.net/generate.php?p=1&l=short&ul=1'"
+curl -s 'http://loripsum.net/generate.php?p=1&l=short&ul=1'
+
+new_page
+################################################################################
+
+print_comment --bold "
+UNIX Pipeline
+"
+print_comment --newline "
+Streams stdout from COMMAND1 to stdin for COMMAND2
+
+- COMMAND1 | COMMAND2     Pipe multiple commands together
+"
+print_prompt_wait
+print_command_wait "curl 'http://loripsum.net/generate.php?p=1&l=short&ul=1' | grep '<li>'"
+curl -s 'http://loripsum.net/generate.php?p=1&l=short&ul=1' | grep '<li>'
+
+new_page
+################################################################################
+
+print_comment --bold "
+UNIX Pipeline
+"
+print_comment --newline "
+Streams stdout from COMMAND1 to stdin for COMMAND2
+
+- COMMAND1 | COMMAND2     Pipe multiple commands together
+"
+print_prompt_wait
+print_command_wait "curl 'http://loripsum.net/generate.php?p=1&l=short&ul=1' | tee -a loripsum.txt | grep '<li>'"
+curl -s 'http://loripsum.net/generate.php?p=1&l=short&ul=1' | tee -a loripsum.txt | grep '<li>'
+
+new_page
+################################################################################
+
+print_comment --bold "
+UNIX Pipeline
+"
+print_comment --newline "
+Streams stdout from COMMAND1 to stdin for COMMAND2
+
+- COMMAND1 | COMMAND2     Pipe multiple commands together
+"
+print_prompt
+print_command "ls -l"
+echo ; ls -l
+
+print_prompt
+print_command "cat loripsum.txt"
+echo ; cat loripsum.txt
+
+
+new_page
+################################################################################
+
+print_comment --bold "
+UNIX Pipeline
+"
+print_comment --newline "
+Streams stdout from COMMAND1 to stdin for COMMAND2
+
+- COMMAND1 | COMMAND2     Pipe multiple commands together
+"
+print_prompt
+print_command_wait "cat loripsum.txt | grep '<li>'"
+cat loripsum.txt | grep '<li>'
+
+
+read
+echo
+ansi 'Uh oh… UUOC.' ; ansi --red --faint --newline " Useless use of cat."
+echo ; echo
+
+read
+ansi --red --inverse --bold ' CAT ABUSE '
+echo ' '🙀
+echo ; echo
+
+new_page
+################################################################################
+
+print_comment --bold "
+UNIX Pipeline
+"
+print_comment --newline "
+Streams stdout from COMMAND1 to stdin for COMMAND2
+
+- COMMAND1 | COMMAND2     Pipe multiple commands together
+"
+print_prompt
+print_command_wait "grep '<li>' <loripsum.txt"
+grep '<li>' <loripsum.txt
+
+new_page
+################################################################################
+
+echo
+echo
+echo
+ansi --inverse --newline ' THANK YOU '
+echo
+echo
+echo
+
+read
+
+rm *.*
